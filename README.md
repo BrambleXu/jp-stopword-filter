@@ -60,8 +60,9 @@ print(filtered_tokens)  # Output: ['こんにちは', '短い']
 
 The `JaStopwordFilter` class supports the following parameters during initialization:
 
+
 | Parameter         | Type   | Default | Description                                             |
-|-- | |- |- |
+|--- |--- |--- |---|
 | `use_slothlib`    | `bool` | `True`  | Whether to use the SlothLib stopword list.              |
 | `use_length`      | `bool` | `False` | Remove tokens with a length of 1 character or less.     |
 | `use_date`        | `bool` | `False` | Remove tokens that match Japanese date formats.         |
@@ -99,13 +100,3 @@ The filter applies the following rules if they are enabled:
 ## Contributing
 
 Contributions are welcome! If you find a bug or have a feature request, feel free to open an issue or submit a pull request.
-
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
-
-## Contact
-
-If you have any questions or feedback, feel free to contact us at [your-email@example.com].
