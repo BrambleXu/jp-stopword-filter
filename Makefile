@@ -6,6 +6,7 @@ lint:
 	pdm run ruff check tests
 	pdm run codespell src	
 	pdm run codespell tests
+	pdm run codespell README.md
 
 format:
 	pdm run ruff format src

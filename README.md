@@ -1,6 +1,6 @@
-# JaStopwordFilter
+# jp-stopword-filter
 
-`JaStopwordFilter` is a lightweight Python library designed to filter stopwords from Japanese text based on customizable rules. It provides an efficient way to preprocess Japanese text for natural language processing (NLP) tasks, with support for common stopword removal techniques and user-defined customization.
+`jp-stopword-filter` is a lightweight Python library designed to filter stopwords from Japanese text based on customizable rules. It provides an efficient way to preprocess Japanese text for natural language processing (NLP) tasks, with support for common stopword removal techniques and user-defined customization.
 
 
 ## Features
@@ -16,7 +16,13 @@
 
 ## Installation
 
-Clone the repository and install the dependencies:
+Install via PyPI:
+
+```bash
+pip install jp-stopword-filter
+```
+
+Alternatively, clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/your-username/ja-stopword-filter.git
@@ -32,21 +38,22 @@ pip install -r requirements.txt
 ```python
 from ja_stopword_filter import JaStopwordFilter
 
-# Example token list
-tokens = ["2024年11月", "こんにちは", "123", "！", "😊", "スペース", "短い", "custom"]
+# Define a token list
+tokens = ["２０２４年１１月", "こんにちは", "１２３", "！", "😊", "スペース", "短い", "custom"]
 
 # Custom wordlist
 custom_wordlist = ["custom", "スペース"]
 
 # Initialize the filter
 filter = JaStopwordFilter(
-    use_slothlib=True,      # Use SlothLib stopwords
-    use_length=True,        # Filter tokens with length <= 1
-    use_date=True,          # Filter Japanese date formats
-    use_numbers=True,       # Filter numeric tokens
-    use_symbols=True,       # Filter symbolic tokens
-    use_spaces=True,        # Filter whitespace-only tokens
-    use_emojis=True,        # Filter emoji tokens
+    convert_full_to_half=True,  # Convert full-width characters to half-width
+    use_slothlib=True,         # Include SlothLib stopwords
+    filter_length=1,           # Filter tokens with length <= 1
+    use_date=True,             # Remove tokens matching date patterns
+    use_numbers=True,          # Remove numeric tokens
+    use_symbols=True,          # Remove tokens with symbols
+    use_spaces=True,           # Remove empty or whitespace-only tokens
+    use_emojis=True,           # Remove emoji-containing tokens
     custom_wordlist=custom_wordlist  # Add custom stopwords
 )
 
@@ -58,43 +65,40 @@ print(filtered_tokens)  # Output: ['こんにちは', '短い']
 
 ## Parameters
 
-The `JaStopwordFilter` class supports the following parameters during initialization:
+`JaStopwordFilter` supports the following parameters for customization:
+
+| Parameter              | Type        | Default | Description                                             |
+| ---------------------- | ----------- | ------- | ------------------------------------------------------- |
+| `convert_full_to_half` | `bool`      | `True`  | Convert full-width characters to half-width.            |
+| `use_slothlib`         | `bool`      | `True`  | Use the SlothLib stopword list.                         |
+| `filter_length`        | `int`       | `0`     | Remove tokens with length ≤ this value (0 disables it). |
+| `use_date`             | `bool`      | `False` | Remove tokens matching Japanese date patterns.          |
+| `use_numbers`          | `bool`      | `False` | Remove numeric tokens.                                  |
+| `use_symbols`          | `bool`      | `False` | Remove tokens containing symbols.                       |
+| `use_spaces`           | `bool`      | `False` | Remove tokens that are empty or consist only of spaces. |
+| `use_emojis`           | `bool`      | `False` | Remove tokens containing emojis.                        |
+| `custom_wordlist`      | `list[str]` | `None`  | Add custom stopwords.                                   |
 
 
-| Parameter         | Type   | Default | Description                                             |
-|--- |--- |--- |---|
-| `use_slothlib`    | `bool` | `True`  | Whether to use the SlothLib stopword list.              |
-| `use_length`      | `bool` | `False` | Remove tokens with a length of 1 character or less.     |
-| `use_date`        | `bool` | `False` | Remove tokens that match Japanese date formats.         |
-| `use_numbers`     | `bool` | `False` | Remove numeric tokens.                                  |
-| `use_symbols`     | `bool` | `False` | Remove symbolic tokens (e.g., `!`, `@`).                |
-| `use_spaces`      | `bool` | `False` | Remove tokens that are empty or consist only of spaces. |
-| `use_emojis`      | `bool` | `False` | Remove tokens containing emojis.                        |
-| `custom_wordlist` | `list` | `None`  | A list of user-defined stopwords to remove.             |
+## Filtering Rules
 
+### Preloaded Stopwords
+By default, `JaStopwordFilter` uses stopwords from a `slothlib.txt` file. Ensure the file is available in the `./src` directory or update the `get_stopwords` function's path.
 
-## Stopword Sources
-
-### SlothLib Stopwords
-If `use_slothlib` is set to `True`, the filter loads stopwords from a `slothlib.txt` file. Ensure this file is in the same directory as the script or adjust the file path in the `get_stopwords` function.
-
-### Custom Wordlist
-You can pass a list of custom stopwords using the `custom_wordlist` parameter. These will be merged with the SlothLib stopwords if enabled.
-
-
-## Rules
-
-The filter applies the following rules if they are enabled:
-
-1. **Length Filtering**: Tokens with one or fewer characters are removed.
-2. **Date Filtering**: Matches Japanese date patterns like:
+### Rule Descriptions
+1. **Length Filtering**: Removes tokens with length ≤ the specified value.
+2. **Date Filtering**: Matches and removes Japanese date patterns such as:
    - `YYYY年MM月`
    - `MM月DD日`
    - `YYYY年MM月DD日`
-3. **Number Filtering**: Removes numeric tokens (`123`, `2024`).
-4. **Symbol Filtering**: Removes punctuation and special symbols.
-5. **Space Filtering**: Removes tokens that are empty or consist only of spaces.
+3. **Number Filtering**: Removes numeric tokens like `123` or `2024`.
+4. **Symbol Filtering**: Removes punctuation and special characters.
+5. **Space Filtering**: Removes empty or whitespace-only tokens.
 6. **Emoji Filtering**: Detects and removes tokens containing emojis.
+
+## Future Improvements
+
+- Support for additional token attributes (e.g., `part of speech`).
 
 
 ## Contributing
