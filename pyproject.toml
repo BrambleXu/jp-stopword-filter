@@ -12,6 +12,12 @@ requires-python = ">=3.9"
 readme = "README.md"
 license = {text = "Apache-2.0"}
 
+[project.urls]
+Homepage = "https://github.com/BrambleXu/jp-stopword-filter"
+Repository = "https://github.com/BrambleXu/jp-stopword-filter"
+Documentation = "https://github.com/BrambleXu/jp-stopword-filter"
+
+
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
