@@ -1,6 +1,6 @@
 [project]
 name = "jp-stopword-filter"
-version = "0.1.0"
+version = "0.2.0"
 description = "A lightweight Python library designed to filter stopwords for Japanese text."
 authors = [
     {name = "BrambleXu", email = "liangxu006@gmail.com"},
