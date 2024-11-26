@@ -1,4 +1,4 @@
-[日本語](./README_j.md)
+[日本語](./README_ja.md)
 
 # jp-stopword-filter
 
